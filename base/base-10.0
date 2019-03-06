@@ -13,6 +13,7 @@ ADD aptpermission /etc/sudoers.d/aptpermission
 # Basic libraries
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         apt-utils \
+        sudo \
         htop \
         python-dev \
         python-pip \
