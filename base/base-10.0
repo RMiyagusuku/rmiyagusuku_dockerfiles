@@ -8,6 +8,7 @@ ENV NVIDIA_VISIBLE_DEVICES all
 # Removes ascii art from tensorflow bash 
 RUN rm /etc/bash.bashrc
 ADD bash.bashrc /etc/ 
+ADD aptpermission /etc/sudoers.d/aptpermission
 
 # Basic libraries
 RUN apt-get update && apt-get install --yes --no-install-recommends \

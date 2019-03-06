@@ -8,10 +8,12 @@ ENV NVIDIA_VISIBLE_DEVICES all
 # Removes ascii art from tensorflow bash 
 RUN rm /etc/bash.bashrc
 ADD bash.bashrc /etc/ 
+ADD aptpermission /etc/sudoers.d/aptpermission
 
 # Basic libraries
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         apt-utils \
+        sudo \
         htop \
         python-dev \
         python-pip \
@@ -48,6 +50,12 @@ RUN python -m pip install --upgrade pip setuptools && \
         scikit-image \
         pydot \
         imgaug
+
+# Create user
+RUN useradd -ms /bin/bash dlbox && \
+    adduser dlbox sudo && \
+    adduser dlbox sudo && \
+    echo "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers 
 
 WORKDIR /home
 

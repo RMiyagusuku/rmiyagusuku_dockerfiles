@@ -1,7 +1,7 @@
-ARG cuda_version=10.0
+ARG cuda_version=9.0
 FROM rmiyagusuku/dlbox:base-${cuda_version}
 
-ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_VISIBLE_DEVICES 0
 
 # Install JupyterHub
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
@@ -11,9 +11,7 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     npm install -g configurable-http-proxy && \
     python3 -m pip install notebook
 
-WORKDIR /home
-
-ENV hub_port 8888
+ENV hub_port 8000
 EXPOSE $hub_port
 
 #Run JupyterHub at $hub_port 
