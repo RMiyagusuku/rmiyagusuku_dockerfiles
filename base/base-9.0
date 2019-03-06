@@ -1,0 +1,54 @@
+ARG tf_version=1.12.0 
+FROM tensorflow/tensorflow:${tf_version}-gpu-py3
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8 
+ENV NVIDIA_VISIBLE_DEVICES all
+
+# Removes ascii art from tensorflow bash 
+RUN rm /etc/bash.bashrc
+ADD bash.bashrc /etc/ 
+
+# Basic libraries
+RUN apt-get update && apt-get install --yes --no-install-recommends \
+        apt-utils \
+        htop \
+        python-dev \
+        python-pip \
+        nano && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install python3 packages including PyTorch 
+RUN pip3 install --upgrade pip && \
+    pip3 install opencv-contrib-python \
+        tqdm==4.19.9 \ 
+        torch \
+        torchvision \
+        seaborn \
+        sympy \
+        nibabel \
+        backup \
+        Pillow \
+        cython \
+        scikit-image \
+        pydot \
+        imgaug
+
+RUN python -m pip install --upgrade pip setuptools && \
+    pip install opencv-contrib-python \
+        tqdm==4.19.9 \ 
+        torch \
+        torchvision \
+        seaborn \
+        sympy \
+        nibabel \
+        backup \
+        Pillow \
+        cython \
+        scikit-image \
+        pydot \
+        imgaug
+
+WORKDIR /home
+
+CMD /bin/bash
