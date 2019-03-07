@@ -51,12 +51,4 @@ RUN python -m pip install --upgrade pip setuptools && \
         pydot \
         imgaug
 
-# Create user
-RUN useradd -ms /bin/bash dlbox && \
-    adduser dlbox sudo && \
-    adduser dlbox sudo && \
-    echo "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers 
-
-WORKDIR /home
-
 CMD /bin/bash

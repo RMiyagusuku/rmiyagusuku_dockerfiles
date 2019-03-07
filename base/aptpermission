@@ -1,0 +1,2 @@
+# Give permission to all to run apt and apt-get
+ALL   ALL=(ALL:ALL) NOPASSWD:/usr/bin/apt, /usr/bin/apt-get

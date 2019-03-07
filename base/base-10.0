@@ -36,8 +36,19 @@ RUN pip3 install --upgrade pip && \
         pydot \
         imgaug
 
-RUN python -m pip install --upgrade pip setuptools
-
-WORKDIR /home
+RUN python -m pip install --upgrade pip setuptools && \
+    pip install opencv-contrib-python \
+        tqdm==4.19.9 \ 
+        torch \
+        torchvision \
+        seaborn \
+        sympy \
+        nibabel \
+        backup \
+        Pillow \
+        cython \
+        scikit-image \
+        pydot \
+        imgaug
 
 CMD /bin/bash
