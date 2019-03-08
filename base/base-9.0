@@ -3,7 +3,7 @@ FROM tensorflow/tensorflow:${tf_version}-gpu-py3
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8 
-ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_VISIBLE_DEVICES 1,2
 
 # Removes ascii art from tensorflow bash 
 RUN rm /etc/bash.bashrc

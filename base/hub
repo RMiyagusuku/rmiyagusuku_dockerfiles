@@ -1,7 +1,7 @@
-ARG cuda_version=9.0
-FROM rmiyagusuku/dlbox:base-${cuda_version}
+ARG cuda_version=10.0
+ARG nvidia_visible=0
 
-ENV NVIDIA_VISIBLE_DEVICES 0
+FROM rmiyagusuku/dlbox:base-${cuda_version}-gpu${nvidia_visible}
 
 # Install JupyterHub
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \

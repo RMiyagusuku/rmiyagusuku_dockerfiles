@@ -1,7 +1,6 @@
 ARG cuda_version=9.0
 FROM rmiyagusuku/dlbox:base-${cuda_version}
 
-ENV NVIDIA_VISIBLE_DEVICES all
 ENV ROS_DISTRO kinetic
 ENV jupyter_port 8000
 EXPOSE $jupyter_port

@@ -69,5 +69,5 @@ if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found/command-no
 	}
 fi
 
-# always start at home directory
-RUN echo "echo cd >> ~/.bashrc" >> /etc/bash.bashrc
+# always start at home directo
+echo "cd" >> ~/.bashrc
