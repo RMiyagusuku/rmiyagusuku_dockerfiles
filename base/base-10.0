@@ -13,10 +13,14 @@ ADD aptpermission /etc/sudoers.d/aptpermission
 # Basic libraries
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         apt-utils \
+        bash-completion \
         sudo \
         htop \
         python-dev \
         python-pip \
+        libsm6 \
+        libxrender-dev \
+        libxtst6 \
         nano && \
     rm -rf /var/lib/apt/lists/*
 
@@ -34,7 +38,11 @@ RUN pip3 install --upgrade pip && \
         cython \
         scikit-image \
         pydot \
-        imgaug
+        imgaug \
+        graphviz \
+        keras
+
+
 
 RUN python -m pip install --upgrade pip setuptools && \
     pip install opencv-contrib-python \
@@ -49,6 +57,8 @@ RUN python -m pip install --upgrade pip setuptools && \
         cython \
         scikit-image \
         pydot \
-        imgaug
+        imgaug \
+        graphviz \
+        keras
 
 CMD /bin/bash
