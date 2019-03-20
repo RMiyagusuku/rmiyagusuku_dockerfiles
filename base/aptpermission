@@ -1,2 +1,3 @@
 # Give permission to all to run apt and apt-get
-ALL   ALL=(ALL:ALL) NOPASSWD:/usr/bin/apt, /usr/bin/apt-get
+ALL   ALL=(ALL:ALL) NOPASSWD:/usr/bin/apt, /usr/bin/apt-get, /usr/bin/add-apt-repository, /usr/bin/make, /usr/local/bin/pip, /usr/local/bin/pip3
+
