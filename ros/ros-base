@@ -2,8 +2,6 @@ ARG cuda_version=9.0
 FROM rmiyagusuku/dlbox:base-${cuda_version}
 
 ENV ROS_DISTRO kinetic
-ENV jupyter_port 8000
-EXPOSE $jupyter_port
 
 # install packages
 RUN apt-get update && apt-get install -q -y \
@@ -39,8 +37,12 @@ RUN apt-get update && apt-get install -y \
         ros-$ROS_DISTRO-ros-core=1.3.2-0* \
         ros-$ROS_DISTRO-perception=1.3.2-0* \
         ros-$ROS_DISTRO-navigation \
+        ros-$ROS_DISTRO-openslam-gmapping \
+        ros-$ROS_DISTRO-diagnostic-updater \
+        ros-$ROS_DISTRO-roslint \
+        libaria-dev \
     && rm -rf /var/lib/apt/lists/*
-
+   
 RUN apt-get update && apt-get install python-rosinstall --no-install-recommends -y \
         python-rosinstall-generator \
         python-wstool \
@@ -48,7 +50,10 @@ RUN apt-get update && apt-get install python-rosinstall --no-install-recommends 
     && rm -rf /var/lib/apt/lists/*
 
 # source environment variables
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
+RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc && \
+    /bin/bash /opt/ros/$ROS_DISTRO/setup.bash
+
+RUN apt-get update
 
 # give a hint about catkin ws initialization
 RUN echo "echo -e '-----\n\n\e[1m\e[34mcreate and initialize catking_ws in your workspace\e[0m\n\nhttp://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment\n\n-----'" >> /etc/bash.bashrc
