@@ -53,3 +53,4 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
 # give a hint about catkin ws initialization
 RUN echo "echo -e '-----\n\n\e[1m\e[34mcreate and initialize catking_ws in your workspace\e[0m\n\nhttp://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment\n\n-----'" >> /etc/bash.bashrc
 
+# test
