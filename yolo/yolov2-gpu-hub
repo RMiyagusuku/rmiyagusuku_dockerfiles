@@ -1,6 +1,11 @@
 FROM rmiyagusuku/yolov2:gpu
 
 # Install JupyterHub
+RUN apt-get update && \
+    apt-get install --yes --no-install-recommends \
+        curl python-setuptools python3-setuptools && \
+    rm -rf /var/lib.apt/lists/* 
+
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install --yes --no-install-recommends nodejs && \
     rm -rf /var/lib/apt/lists/* && \
