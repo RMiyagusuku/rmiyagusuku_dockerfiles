@@ -1,0 +1,21 @@
+FROM rmiyagusuku/yolov2:gpu
+
+# Install JupyterHub
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+    apt-get install --yes --no-install-recommends nodejs && \
+    rm -rf /var/lib/apt/lists/* && \
+    python3 -m pip install jupyterhub && \
+    npm install -g configurable-http-proxy && \
+    python3 -m pip install notebook
+
+RUN python3 -m pip install bqplot pyyaml ipywidgets && \
+    jupyter nbextension enable --py --sys-prefix widgetsnbextension 
+
+RUN python3 -m pip install jupyros && \
+    jupyter nbextension enable --py --sys-prefix jupyros
+
+ENV hub_port 9000
+EXPOSE $hub_port
+
+#Run JupyterHub at $hub_port 
+ENTRYPOINT exec jupyterhub --port $hub_port --ip 0.0.0.0
