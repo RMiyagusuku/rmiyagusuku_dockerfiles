@@ -92,6 +92,7 @@ RUN git clone https://github.com/pjreddie/darknet && \
     sed -i'' -- 's/GPU=0/GPU=1/g' Makefile && \ 
     sed -i'' -- 's/CUDNN=0/CUDNN=1/g' Makefile && \ 
     sed -i'' -- 's/OPENCV=0/OPENCV=1/g' Makefile && \ 
+    sed -i'' -- 's/OPENMP=0/OPENMP=1/g' Makefile && \ 
     make -j$(nproc) && \
     ldconfig
 
@@ -99,5 +100,17 @@ RUN git clone https://github.com/pjreddie/darknet && \
 RUN cd darknet && \
     wget --quiet https://pjreddie.com/media/files/yolov2.weights
 
+#create user
+# Replace 1000 with your user / group id
+RUN export uid=1000 gid=1000 && \
+    mkdir -p /home/yolo && \
+    echo "yolo:x:${uid}:${gid}:yolo,,,:/home/yolo:/bin/bash" >> /etc/passwd && \
+    echo "yolo:x:${uid}:" >> /etc/group && \
+    echo "yolo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/yolo && \
+    chmod 0440 /etc/sudoers.d/yolo && \
+    chown ${uid}:${gid} -R /home/yolo
+
+USER yolo
+ENV HOME /home/yolo
 
 ENTRYPOINT exec /bin/bash
