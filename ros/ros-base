@@ -4,6 +4,9 @@ FROM rmiyagusuku/dlbox:base-${cuda_version}
 ENV ROS_DISTRO kinetic
 ENV http_proxy "http://proxya.cc.utsunomiya-u.ac.jp:8080"
 ENV https_proxy "http://proxya.cc.utsunomiya-u.ac.jp:8080"
+ENV no_proxy "localhost,127.0.0.0/8,::1"
+
+ADD apt.conf /etc/apt/
 
 # install packages
 RUN apt-get update && apt-get install -q -y \
@@ -62,6 +65,8 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc && \
 RUN apt-get update
 
 # give a hint about catkin ws initialization
-RUN echo "echo -e '-----\n\n\e[1m\e[34mcreate and initialize catking_ws in your workspace\e[0m\n\nhttp://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment\n\n-----'" >> /etc/bash.bashrc
+#RUN echo "echo -e '-----\n\n\e[1m\e[34mcreate and initialize catking_ws in your workspace\e[0m\n\nhttp://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment\n\n-----'" >> /etc/bash.bashrc
 
 # test
+
+ENTRYPOINT exec /bin/bash
