@@ -58,15 +58,22 @@ RUN apt-get update && apt-get install python-rosinstall --no-install-recommends 
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install PyYAML rospkg catkin_pkg
 
-# source environment variables
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc && \
+    echo "rospack profile" >> /etc/bash.bashrc && \
     /bin/bash /opt/ros/$ROS_DISTRO/setup.bash
 
-RUN apt-get update
+RUN export uid=3000 gid=3000 && \
+    mkdir -p /home/ros && \
+    echo "ros:x:${uid}:${gid}:ros,,,:/home/ros:/bin/bash" >> /etc/passwd && \
+    echo "ros:x:${uid}:" >> /etc/group && \
+    echo "ros ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ros && \
+    chmod 0440 /etc/sudoers.d/ros && \
+    chown ${uid}:${gid} -R /home/ros 
 
-# give a hint about catkin ws initialization
-#RUN echo "echo -e '-----\n\n\e[1m\e[34mcreate and initialize catking_ws in your workspace\e[0m\n\nhttp://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment\n\n-----'" >> /etc/bash.bashrc
+USER ros
+ENV HOME /home/ros 
+WORKDIR /home/ros
 
-# test
 
 ENTRYPOINT exec /bin/bash
+

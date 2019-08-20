@@ -1,9 +1,5 @@
 FROM rmiyagusuku/ros:base
 
-ENV http_proxy "http://proxya.cc.utsunomiya-u.ac.jp:8080"
-ENV https_proxy "http://proxya.cc.utsunomiya-u.ac.jp:8080"
-
- 
 # Install JupyterHub
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install --yes --no-install-recommends nodejs && \
@@ -21,6 +17,8 @@ RUN python3 -m pip install jupyros && \
 ENV hub_port 8000
 EXPOSE $hub_port
 
+ADD jupyterhub_config.py /
+
 #Run JupyterHub at $hub_port 
-CMD jupyterhub --port $hub_port --ip 0.0.0.0
+ENTRYPOINT exec jupyterhub --port $hub_port -f /jupyterhub_config.py
 
